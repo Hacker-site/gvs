@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}| Add Student{% endblock %}
+{% block content %}
+<style>
+.inner-page{max-width:900px;margin:0 auto;padding:3rem 5%;position:relative;z-index:1;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.student-table{width:100%;border-collapse:collapse;}
+.student-table th{background:rgba(249,200,74,.08);color:var(--gold);padding:10px 14px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--border);}
+.student-table td{padding:10px 14px;border-bottom:1px solid rgba(26,42,64,.5);color:var(--text);font-size:.9rem;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+</style>
+<div class="inner-page">
+  <div class="sec-title anim-up">Student Add Karo</div>
+  <div class="divider anim-up d1"></div>
+  <div class="two-col">
+    <div class="anim-up d2">
+      <div class="card">
+        {% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+        {% if success %}<div class="form-success">{{ success }}</div>{% endif %}
+        <form method="POST">
+          <div class="form-group"><label>Full Name</label><input name="name" type="text" placeholder="Student ka naam" required/></div>
+          <div class="form-group"><label>Username</label><input name="username" type="text" placeholder="Login username" required/></div>
+          <div class="form-group"><label>Password</label><input name="password" type="text" placeholder="Password" required/></div>
+          <button type="submit" class="btn btn-gold" style="width:100%;">Student Add Karo</button>
+        </form>
+      </div>
+    </div>
+    <div class="anim-up d3">
+      <div class="sec-title" style="font-size:1rem;margin-bottom:1rem;">Registered Students</div>
+      <div class="card" style="overflow-x:auto;">
+        <table class="student-table">
+          <thead><tr><th>Name</th><th>Username</th><th>Password</th><th>Role</th></tr></thead>
+          <tbody>
+            {% for uname, udata in users.items() %}
+            <tr>
+              <td>{{ udata.name }}</td>
+              <td style="color:var(--gold);">{{ uname }}</td>
+              <td style="color:var(--muted);">{{ udata.password }}</td>
+              <td><span style="background:rgba(26,110,245,.15);color:#5da8ff;padding:2px 10px;border-radius:20px;font-size:.8rem;">{{ udata.role }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}| Admin Attendance{% endblock %}
+{% block content %}
+<style>
+.inner-page{max-width:1000px;margin:0 auto;padding:3rem 5%;position:relative;z-index:1;}
+.att-table{width:100%;border-collapse:collapse;}
+.att-table th{background:rgba(249,200,74,.08);color:var(--gold);padding:10px 14px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--border);}
+.att-table td{padding:10px 14px;border-bottom:1px solid rgba(26,42,64,.5);color:var(--text);font-size:.9rem;vertical-align:top;}
+.badge-p{background:rgba(30,200,100,.12);color:#5dcaa5;padding:2px 10px;border-radius:20px;font-size:.8rem;border:1px solid rgba(30,200,100,.3);}
+.badge-a{background:rgba(226,75,74,.12);color:#f09595;padding:2px 10px;border-radius:20px;font-size:.8rem;border:1px solid rgba(226,75,74,.3);}
+.mark-form{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.mark-form input,.mark-form select{padding:6px 10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.9rem;outline:none;}
+.mark-form input:focus,.mark-form select:focus{border-color:var(--gold);}
+.btn-sm{padding:6px 14px;font-size:.9rem;}
+</style>
+<div class="inner-page">
+  <div class="sec-title anim-up">Admin — Sabki Attendance</div>
+  <div class="divider anim-up d1"></div>
+  <p class="sec-sub anim-up d2">Kisi bhi student ki attendance manually mark karo.</p>
+
+  <div id="admin-msg" style="margin-bottom:1rem;"></div>
+
+  {% if students %}
+  <div class="card anim-up d2" style="overflow-x:auto;">
+    <table class="att-table">
+      <thead><tr><th>Student</th><th>Username</th><th>Aaj ({{ today }})</th><th>Manual Mark</th><th>History</th></tr></thead>
+      <tbody>
+        {% for uname, udata in students.items() %}
+        {% set hist = all_att.get(uname, {}) %}
+        {% set today_status = hist.get(today, 'A') %}
+        <tr>
+          <td>{{ udata.name }}</td>
+          <td style="color:var(--muted);">{{ uname }}</td>
+          <td><span class="{{ 'badge-p' if today_status=='P' else 'badge-a' }}">{{ today_status }}</span></td>
+          <td>
+            <div class="mark-form">
+              <input type="date" id="date_{{ uname }}" value="{{ today }}" max="{{ today }}"/>
+              <select id="status_{{ uname }}"><option value="P">P — Present</option><option value="A">A — Absent</option></select>
+              <button class="btn btn-gold btn-sm" onclick="adminMark('{{ uname }}')">Mark</button>
+            </div>
+          </td>
+          <td>
+            {% if hist %}
+              {% for d, s in hist|dictsort|reverse %}
+                <div style="font-size:.8rem;margin-bottom:2px;"><span style="color:var(--muted);">{{ d }}</span> <span class="{{ 'badge-p' if s=='P' else 'badge-a' }}">{{ s }}</span></div>
+              {% endfor %}
+            {% else %}
+              <span style="color:var(--muted);font-size:.85rem;">No record</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="card anim-up d2" style="text-align:center;color:var(--muted);">Koi student registered nahi hai. Pehle student add karo.</div>
+  {% endif %}
+</div>
+<script>
+function adminMark(uname){
+  const d=document.getElementById('date_'+uname).value;
+  const s=document.getElementById('status_'+uname).value;
+  fetch('/attendance',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'target_user='+uname+'&date='+d+'&status='+s})
+  .then(r=>r.json()).then(res=>{
+    const el=document.getElementById('admin-msg');
+    if(res.success){el.innerHTML='<div class="form-success">'+uname+' ki attendance ('+d+') — '+s+' mark ho gayi!</div>';setTimeout(()=>location.reload(),1500);}
+    else{el.innerHTML='<div class="form-error">Error! Try again.</div>';}
+  });
+}
+</script>
+{% endblock %}

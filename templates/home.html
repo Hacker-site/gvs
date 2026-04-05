@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}| Home{% endblock %}
+{% block content %}
+<style>
+.hero{min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem 5%;position:relative;z-index:1;}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(249,200,74,.06) 0%,transparent 70%);pointer-events:none;}
+.hero-logo{font-family:'Orbitron',sans-serif;font-size:clamp(4rem,12vw,8rem);font-weight:900;background:linear-gradient(135deg,var(--gold) 0%,#fff 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:8px;animation:logoPulse 3s ease-in-out infinite,fadeUp .8s ease both;}
+.hero-tagline{font-size:clamp(1rem,3vw,1.4rem);color:var(--muted);margin:1rem 0 2rem;letter-spacing:2px;animation:fadeUp .8s .2s ease both;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.8rem;letter-spacing:2px;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-8px);}}
+
+.features{padding:5rem 5%;position:relative;z-index:1;}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;text-align:center;transition:all .3s;}
+.feat-card:hover{border-color:rgba(249,200,74,.4);transform:translateY(-6px);box-shadow:0 12px 40px rgba(249,200,74,.06);}
+.feat-icon{font-size:2.5rem;margin-bottom:1rem;display:block;}
+.feat-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:1px;}
+.feat-desc{color:var(--muted);font-size:.95rem;line-height:1.6;}
+
+.stats{padding:3rem 5%;background:var(--bg2);position:relative;z-index:1;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.5rem;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:700;color:var(--gold);}
+.stat-label{color:var(--muted);font-size:.9rem;margin-top:.3rem;}
+</style>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div>
+    <div class="hero-logo">GVS</div>
+    <p class="hero-tagline">GYAN · VICHAR · SEWA — Shiksha ka Naya Adhyay</p>
+    <div class="hero-btns">
+      <a href="/courses" class="btn btn-gold">Courses Dekho</a>
+      {% if not user %}<a href="/login" class="btn btn-outline">Login Karo</a>{% endif %}
+    </div>
+    <div class="hero-scroll">▼ Scroll</div>
+  </div>
+</div>
+
+<div class="features">
+  <div style="text-align:center;margin-bottom:3rem;">
+    <div class="sec-title anim-up">Kyun Chunein GVS?</div>
+    <div class="divider" style="margin:0 auto 1rem;"></div>
+    <div class="sec-sub anim-up d2">Hamare saath padho, aage badho</div>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card anim-up d1"><span class="feat-icon">🎓</span><div class="feat-title">Expert Faculty</div><div class="feat-desc">Anubhavi shikshak jo aapki success ke liye dedicated hain.</div></div>
+    <div class="feat-card anim-up d2"><span class="feat-icon">📱</span><div class="feat-title">Online Platform</div><div class="feat-desc">Kabhi bhi, kahin bhi padho — mobile friendly website.</div></div>
+    <div class="feat-card anim-up d3"><span class="feat-icon">📊</span><div class="feat-title">Attendance Track</div><div class="feat-desc">Real-time attendance tracking for students and admin.</div></div>
+    <div class="feat-card anim-up d4"><span class="feat-icon">🏆</span><div class="feat-title">Best Results</div><div class="feat-desc">Hamare students ne consistently top results diye hain.</div></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stats-grid">
+    <div class="anim-up d1"><div class="stat-num">500+</div><div class="stat-label">Students</div></div>
+    <div class="anim-up d2"><div class="stat-num">20+</div><div class="stat-label">Courses</div></div>
+    <div class="anim-up d3"><div class="stat-num">95%</div><div class="stat-label">Success Rate</div></div>
+    <div class="anim-up d4"><div class="stat-num">10+</div><div class="stat-label">Years Experience</div></div>
+  </div>
+</div>
+{% endblock %}

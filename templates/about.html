@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}| About Us{% endblock %}
+{% block content %}
+<style>
+.inner-page{max-width:900px;margin:0 auto;padding:3rem 5%;position:relative;z-index:1;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem;}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;text-align:center;}
+.team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-family:'Orbitron',sans-serif;font-weight:700;color:#050a14;}
+.team-name{font-weight:600;color:var(--text);}
+.team-role{color:var(--muted);font-size:.9rem;}
+</style>
+<div class="inner-page">
+  <div class="sec-title anim-up">GVS ke Baare Mein</div>
+  <div class="divider anim-up d1"></div>
+  <p class="anim-up d2" style="color:var(--muted);line-height:1.8;margin-bottom:2rem;">GVS Institute ek premier educational platform hai jo students ko quality education provide karta hai. Hamare experienced faculty aur modern teaching methods se hazaron students ne apne goals achieve kiye hain. Hamara mission hai — har student ko best possible education milni chahiye.</p>
+  <div class="sec-title anim-up d3" style="font-size:1.2rem;">Hamara Vision</div>
+  <div class="card anim-up d4" style="margin-bottom:2rem;"><p style="color:var(--muted);line-height:1.8;">Hum chahte hain ki education sirf books tak simit na rahe — practical knowledge aur skills ke saath students future-ready banein. GVS ka matlab hai Gyan (Knowledge), Vichar (Thinking) aur Sewa (Service).</p></div>
+  <div class="sec-title anim-up" style="font-size:1.2rem;">Hamare Team</div>
+  <div class="team-grid">
+    <div class="team-card anim-up d1"><div class="team-avatar">AK</div><div class="team-name">Arun Kumar</div><div class="team-role">Director</div></div>
+    <div class="team-card anim-up d2"><div class="team-avatar">PS</div><div class="team-name">Priya Sharma</div><div class="team-role">Head of Faculty</div></div>
+    <div class="team-card anim-up d3"><div class="team-avatar">RV</div><div class="team-name">Rahul Verma</div><div class="team-role">Tech Lead</div></div>
+  </div>
+</div>
+{% endblock %}

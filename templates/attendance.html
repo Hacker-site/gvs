@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}| Attendance{% endblock %}
+{% block content %}
+<style>
+.inner-page{max-width:800px;margin:0 auto;padding:3rem 5%;position:relative;z-index:1;}
+.att-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;margin-bottom:2rem;text-align:center;}
+.today-date{font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--gold);margin-bottom:1rem;}
+.mark-btn{font-size:1.1rem;padding:14px 40px;}
+.att-table{width:100%;border-collapse:collapse;margin-top:1rem;}
+.att-table th{background:rgba(249,200,74,.08);color:var(--gold);padding:10px 14px;text-align:left;font-size:.9rem;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.att-table td{padding:10px 14px;border-bottom:1px solid rgba(26,42,64,.5);color:var(--text);font-size:.95rem;}
+.badge-p{background:rgba(30,200,100,.12);color:#5dcaa5;padding:3px 12px;border-radius:20px;font-size:.85rem;border:1px solid rgba(30,200,100,.3);}
+.badge-a{background:rgba(226,75,74,.12);color:#f09595;padding:3px 12px;border-radius:20px;font-size:.85rem;border:1px solid rgba(226,75,74,.3);}
+.stats-row{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.5rem;flex:1;text-align:center;}
+.stat-box-num{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;}
+.stat-box-label{color:var(--muted);font-size:.85rem;margin-top:.2rem;}
+</style>
+<div class="inner-page">
+  <div class="sec-title anim-up">Meri Attendance</div>
+  <div class="divider anim-up d1"></div>
+
+  {% set total = history|length %}
+  {% set present = history.values()|list|select('equalto','P')|list|length %}
+  {% set absent = total - present %}
+
+  <div class="stats-row anim-up d2">
+    <div class="stat-box"><div class="stat-box-num" style="color:var(--gold);">{{ total }}</div><div class="stat-box-label">Total Days</div></div>
+    <div class="stat-box"><div class="stat-box-num" style="color:#5dcaa5;">{{ present }}</div><div class="stat-box-label">Present (P)</div></div>
+    <div class="stat-box"><div class="stat-box-num" style="color:#f09595;">{{ absent }}</div><div class="stat-box-label">Absent (A)</div></div>
+  </div>
+
+  <div class="att-card anim-up d3">
+    <div class="today-date">Aaj ki Date: {{ today }}</div>
+    {% if already_marked %}
+      <div class="form-success">Aaj ki attendance already mark ho gayi hai ✓</div>
+    {% else %}
+      <button class="btn btn-gold mark-btn" onclick="markAttendance()">Aaj ki Attendance Mark Karo</button>
+    {% endif %}
+    <div id="att-msg" style="margin-top:1rem;"></div>
+  </div>
+
+  <div class="sec-title anim-up" style="font-size:1.1rem;margin-bottom:1rem;">Attendance History</div>
+  {% if history %}
+  <div class="card anim-up d1" style="overflow-x:auto;">
+    <table class="att-table">
+      <thead><tr><th>#</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for date_val, status in history|dictsort|reverse %}
+        <tr>
+          <td style="color:var(--muted);">{{ loop.index }}</td>
+          <td>{{ date_val }}</td>
+          <td><span class="{{ 'badge-p' if status=='P' else 'badge-a' }}">{{ status }} — {{ 'Present' if status=='P' else 'Absent' }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="card anim-up d2" style="text-align:center;color:var(--muted);">Abhi tak koi attendance record nahi hai.</div>
+  {% endif %}
+</div>
+<script>
+function markAttendance(){
+  const today='{{ today }}';
+  fetch('/attendance',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'date='+today})
+  .then(r=>r.json())
+  .then(d=>{
+    const el=document.getElementById('att-msg');
+    if(d.success){el.innerHTML='<div class="form-success">Attendance mark ho gayi! Refresh karo history dekhne ke liye.</div>';document.querySelector('.mark-btn').disabled=true;document.querySelector('.mark-btn').style.opacity='.5';}
+    else{el.innerHTML='<div class="form-error">'+(d.error||'Error')+'</div>';}
+  });
+}
+</script>
+{% endblock %}

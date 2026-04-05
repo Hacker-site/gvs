@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}| Courses{% endblock %}
+{% block content %}
+<style>
+.inner-page{max-width:1000px;margin:0 auto;padding:3rem 5%;position:relative;z-index:1;}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+.course-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s;}
+.course-card:hover{border-color:rgba(249,200,74,.4);transform:translateY(-5px);box-shadow:0 10px 40px rgba(0,0,0,.3);}
+.course-top{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
+.course-icon{font-size:2rem;margin-bottom:.8rem;}
+.course-title{font-family:'Orbitron',sans-serif;font-size:.95rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:1px;}
+.course-desc{color:var(--muted);font-size:.9rem;line-height:1.6;}
+.course-bottom{padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+.course-badge{background:rgba(26,110,245,.15);color:#5da8ff;font-size:.8rem;padding:3px 10px;border-radius:20px;border:1px solid rgba(26,110,245,.3);}
+.course-price{color:var(--gold);font-weight:600;font-size:1rem;}
+</style>
+<div class="inner-page">
+  <div class="sec-title anim-up">Hamare Courses</div>
+  <div class="divider anim-up d1"></div>
+  <p class="sec-sub anim-up d2">Apne goal ke hisaab se course chuniye</p>
+  <div class="course-grid">
+    <div class="course-card anim-up d1"><div class="course-top"><div class="course-icon">💻</div><div class="course-title">Web Development</div><div class="course-desc">HTML, CSS, JavaScript, Python se full-stack developer bano.</div></div><div class="course-bottom"><span class="course-badge">6 Months</span><span class="course-price">₹8,999</span></div></div>
+    <div class="course-card anim-up d2"><div class="course-top"><div class="course-icon">📊</div><div class="course-title">Data Science</div><div class="course-desc">Python, ML, AI se data scientist bano aur top companies join karo.</div></div><div class="course-bottom"><span class="course-badge">4 Months</span><span class="course-price">₹10,999</span></div></div>
+    <div class="course-card anim-up d3"><div class="course-top"><div class="course-icon">📱</div><div class="course-title">App Development</div><div class="course-desc">Android aur iOS apps banao aur apna startup shuru karo.</div></div><div class="course-bottom"><span class="course-badge">5 Months</span><span class="course-price">₹9,499</span></div></div>
+    <div class="course-card anim-up d4"><div class="course-top"><div class="course-icon">🔐</div><div class="course-title">Cyber Security</div><div class="course-desc">Ethical hacking aur cybersecurity expert bano.</div></div><div class="course-bottom"><span class="course-badge">3 Months</span><span class="course-price">₹7,499</span></div></div>
+    <div class="course-card anim-up d1"><div class="course-top"><div class="course-icon">🎨</div><div class="course-title">UI/UX Design</div><div class="course-desc">Creative designs se products ko beautiful aur usable banao.</div></div><div class="course-bottom"><span class="course-badge">3 Months</span><span class="course-price">₹6,999</span></div></div>
+    <div class="course-card anim-up d2"><div class="course-top"><div class="course-icon">☁️</div><div class="course-title">Cloud Computing</div><div class="course-desc">AWS, Azure, GCP se cloud engineer bano aur high salary pao.</div></div><div class="course-bottom"><span class="course-badge">4 Months</span><span class="course-price">₹11,499</span></div></div>
+  </div>
+</div>
+{% endblock %}
